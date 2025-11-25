@@ -7,7 +7,7 @@ const Login = () => {
       <header className="bg-slate-800 flex justify-center items-center h-[5vh]">
         <Navbar></Navbar>
       </header>
-      <section className="flex h-[95vh] items-center justify-center">
+      <section className="flex h-[90vh] items-center justify-center">
         <LoginForm></LoginForm>
       </section>
       <footer></footer>
