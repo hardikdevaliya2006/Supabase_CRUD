@@ -1,9 +1,11 @@
-import React from 'react'
+import AppRoute from "./routes/AppRoute.Route";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <>
+      <AppRoute></AppRoute>
+    </>
+  );
+};
 
-export default App
+export default App;
