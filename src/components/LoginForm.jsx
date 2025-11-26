@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MiniSpinner from "./MiniSpinner";
-import { loginUser } from "../store/reducer/actions/loginUser.action";
+import { loginUser } from "../store/reducer/actions/auth/loginUser.action";
 import { Link, useNavigate } from "react-router";
 
 const LoginForm = () => {

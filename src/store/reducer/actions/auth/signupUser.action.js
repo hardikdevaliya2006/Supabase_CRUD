@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import suapabase from "../../../supabase/supabase";
+import suapabase from "../../../../supabase/supabase";
 
 export const signupUser = createAsyncThunk(
     "auth/signupUser",

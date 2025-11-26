@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { checkAuth } from "./actions/checkAuth.action"
-import { logoutUser } from "./actions/logoutUser.action"
-import { loginUser } from "./actions/loginUser.action"
-import { signupUser } from "./actions/signupUser.action"
+import { checkAuth } from "./actions/auth/checkAuth.action"
+import { logoutUser } from "./actions/auth/logoutUser.action"
+import { loginUser } from "./actions/auth/loginUser.action"
+import { signupUser } from "./actions/auth/signupUser.action"
 import toast from "react-hot-toast"
 
 const initialState = {
