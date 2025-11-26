@@ -8,7 +8,7 @@ const Dashboard = () => {
       <header className="bg-slate-800 flex justify-center items-center h-[6vh]">
         <Navbar></Navbar>
       </header>
-      <section className="flex h-[88vh] items-center justify-center">
+      <section className="flex h-[88vh] flex-col mt-4 items-center ">
         <CreateNewPassword></CreateNewPassword>
         <PasswordListTable></PasswordListTable>
       </section>
