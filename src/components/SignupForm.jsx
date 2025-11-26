@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MiniSpinner from "./MiniSpinner";
 import { signupUser } from "../store/reducer/actions/signupUser.action";
+import { Link, useNavigate } from "react-router";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { user, error, loading } = useSelector((state) => state.auth);
 
   const [form, setForm] = useState({ fullName: "", email: "", password: "" });
 
@@ -13,6 +15,12 @@ const SignupForm = () => {
     e.preventDefault();
     dispatch(signupUser(form));
   };
+
+  useEffect(() => {
+    if (user && !error) {
+      setTimeout(() => navigate("/", { replace: true }), 2000);
+    }
+  }, [user, navigate, error]);
 
   return (
     <section className="h-screen w-full flex justify-center items-center">
@@ -75,16 +83,15 @@ const SignupForm = () => {
                 "Signup"
               )}
             </button>
-            {error && <p className="text-red-600 mt-2">{error}</p>}
             <div className="text-sm subtext">
               <p>
                 <span>Have an account? </span>
-                <a
-                  href="#"
+                <Link
+                to={"/login"}
                   className="text-brand-primary text-green-600 underline"
                 >
                   Login here
-                </a>
+                </Link>
               </p>
             </div>
           </div>

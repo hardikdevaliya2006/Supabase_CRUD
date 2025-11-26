@@ -7,7 +7,7 @@ export const checkAuth = createAsyncThunk(
         try {
             const { data, error } = await suapabase.auth.getSession()
             if (error) return rejectWithValue(error.message);
-            return data.session;
+            return data.session || null;
         } catch (error) {
             console.error(error)
             return rejectWithValue(error)

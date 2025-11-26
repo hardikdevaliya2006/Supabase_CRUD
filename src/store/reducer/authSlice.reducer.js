@@ -3,13 +3,14 @@ import { checkAuth } from "./actions/checkAuth.action"
 import { logoutUser } from "./actions/logoutUser.action"
 import { loginUser } from "./actions/loginUser.action"
 import { signupUser } from "./actions/signupUser.action"
+import toast from "react-hot-toast"
 
 const initialState = {
     user: null,
     session: null,
-    loading: false,
+    loading: true,
     error: null,
-    isAuthenticated: false
+    isAuthenticated: false,
 }
 
 const authSlice = createSlice({
@@ -17,18 +18,17 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         clearError: (state) => {
-            state.error = null
+            state.error = null;
         },
         setAuthState: (state, action) => {
-            const session = action.payload
-            state.session = session
-            state.user = session?.user || null
-            state.isAuthenticated = !!session
+            const session = action.payload;
+            state.session = session;
+            state.user = session?.user || null;
+            state.isAuthenticated = !!session;
         }
     },
     extraReducers: (builder) => {
         builder
-
             // Signup
             .addCase(signupUser.pending, (state) => {
                 state.loading = true
@@ -38,9 +38,11 @@ const authSlice = createSlice({
                 state.session = action.payload?.session
                 state.isAuthenticated = !!action.payload?.session
                 state.error = null
+                toast.success("Signup Successfull!");
             }).addCase(signupUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload
+                toast.error(action.payload);
             })
 
             // Login
@@ -52,9 +54,11 @@ const authSlice = createSlice({
                 state.session = action.payload?.session
                 state.isAuthenticated = true
                 state.error = null
+                toast.success("Login Successfull!");
             }).addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload
+                toast.error(action.payload);
             })
 
             // Logout
@@ -66,12 +70,17 @@ const authSlice = createSlice({
             })
 
             // For Refresh Auth Session
+            .addCase(checkAuth.pending, (state) => {
+                state.loading = true;
+            })
             .addCase(checkAuth.fulfilled, (state, action) => {
+                state.loading = false;
                 state.session = action.payload
                 state.user = action.payload?.user || null
                 state.isAuthenticated = !!action.payload
             }).addCase(checkAuth.rejected, (state) => {
                 state.isAuthenticated = false;
+                state.loading = false;
             });
     }
 })
