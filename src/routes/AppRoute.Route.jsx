@@ -5,6 +5,7 @@ import Update from "../pages/Dashboard";
 import Create from "../pages/Create";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import ProtectedRoute from "./ProtectedRoute.Route";
 
 const AppRoute = () => {
   return (
@@ -12,9 +13,30 @@ const AppRoute = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/create" element={<Create />} />
-      <Route path="/update/:id" element={<Update />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/create"
+        element={
+          <ProtectedRoute>
+            <Create />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/update/:id"
+        element={
+          <ProtectedRoute>
+            <Update />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };
