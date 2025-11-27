@@ -1,9 +1,7 @@
-import React from "react";
-
 const CreateNewPassword = () => {
   return (
-    <section className="w-full flex items-center justify-center">
-      <button className="bg-green-500 cursor-pointer hover:scale-99 transition-all w-[95%] px-4 gap-2 py-2 flex items-center justify-center rounded-full ">
+    <section className="w-[97vw] md:w-[70vw] flex items-center justify-center lg:justify-end">
+      <button className="bg-green-500 cursor-pointer hover:scale-99 transition-all w-[95%] lg:w-fit lg:px-8 px-4 gap-2 py-2 flex items-center justify-center rounded-full ">
         <span className="flex items-center justify-center">
           <lord-icon
             src="https://cdn.lordicon.com/jqqjtvlf.json"

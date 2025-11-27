@@ -1,18 +1,19 @@
+import React from "react";
 import Navbar from "../components/Navbar";
-import Profile from "../components/Profile";
+import UpdateUserName from "../components/UpdateUserName";
 
-const UserProfile = () => {
+const UpdateName = () => {
   return (
     <main className="h-screen bg-green-50 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] ">
       <header className="bg-slate-800 flex justify-center items-center h-[6vh]">
         <Navbar></Navbar>
       </header>
-      <section className="flex h-[93vh] flex-col gap-6 sm:gap-8 items-center justify-center">
-        <Profile></Profile>
+      <section className="flex h-[88vh] items-center justify-center">
+        <UpdateUserName></UpdateUserName>
       </section>
       <footer></footer>
     </main>
   );
 };
 
-export default UserProfile;
+export default UpdateName;

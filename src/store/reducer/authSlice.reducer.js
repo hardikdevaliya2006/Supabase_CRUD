@@ -4,6 +4,8 @@ import { logoutUser } from "./actions/auth/logoutUser.action"
 import { loginUser } from "./actions/auth/loginUser.action"
 import { signupUser } from "./actions/auth/signupUser.action"
 import toast from "react-hot-toast"
+import { updateFullName } from "./actions/auth/updateFullName.action"
+import { forgotPassword } from "./actions/auth/forgotPassword.action"
 
 const initialState = {
     user: null,
@@ -81,6 +83,35 @@ const authSlice = createSlice({
             }).addCase(checkAuth.rejected, (state) => {
                 state.isAuthenticated = false;
                 state.loading = false;
+            })
+
+            // Upadate Name
+            .addCase(updateFullName.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(updateFullName.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+                toast.success("Name updated successfully!");
+            })
+            .addCase(updateFullName.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                toast.error(action.payload);
+            })
+
+            // Reset Password
+            .addCase(forgotPassword.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(forgotPassword.fulfilled, (state) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                toast.error(action.payload);
             });
     }
 })

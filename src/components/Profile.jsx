@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlineDateRange } from "react-icons/md";
@@ -6,33 +6,41 @@ import { MdOutlineLock } from "react-icons/md";
 import { LuPencil } from "react-icons/lu";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Link } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
+import { logoutUser } from "../store/reducer/actions/auth/logoutUser.action";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function toIST(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
   }
+
+  const logOut = () => {
+    dispatch(logoutUser());
+    navigate("/login");
+  };
+
   return (
     <>
-      <div className="userNameAndPhoto flex-col flex items-center justify-center gap-2">
+      <div className="userNameAndPhoto flex-col flex items-center justify-center md:gap-4 gap-2">
         <div>
           <img
             src={`https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${encodeURIComponent(
               user?.email
             )}&radius=50`}
             alt="avatar"
-            className="w-28 h-28"
+            className="sm:w-32 w-28"
           />
         </div>
         <div className="text-2xl font-semibold">
           <p>👋🏻 Wellcome {user?.user_metadata?.fullName}</p>
         </div>
       </div>
-      <div className="userData w-[85%] gap-2 flex-col flex items-center justify-center">
+      <div className="userData md:w-100 w-[85%] gap-2 flex-col flex items-center justify-center">
         <div className="nameInput w-full flex flex-col gap-1">
           <label htmlFor="fullName" className="text-sm">
             Full Name
@@ -44,7 +52,7 @@ const Profile = () => {
               id="fullName"
               value={user?.user_metadata?.fullName}
               readOnly
-              className="w-full outline-none"
+              className="w-full md:text-xl outline-none"
             />
           </div>
         </div>
@@ -59,7 +67,7 @@ const Profile = () => {
               id="email"
               value={user?.user_metadata?.email}
               readOnly
-              className="w-full outline-none"
+              className="w-full md:text-xl outline-none"
             />
           </div>
         </div>
@@ -74,16 +82,16 @@ const Profile = () => {
               id="time"
               value={toIST(user?.last_sign_in_at)}
               readOnly
-              className="w-full outline-none"
+              className="w-full md:text-xl outline-none"
             />
           </div>
         </div>
       </div>
-      <div className="userMamgement w-[85%]">
+      <div className="userMamgement md:w-100 w-[85%]">
         <div class="flex flex-col gap-2 items-center justify-center">
           <Link
-            className="p-1 flex items-center justify-center gap-2 font-semibold w-full text-yellow-400 border border-yellow-500/50 bg-yellow-500/10 rounded-lg cursor-pointer"
-            data-discover="true"
+            to={`/profile/${user?.id}/forgot-password`}
+            className="p-1 flex items-center justify-center gap-2 font-semibold w-full text-yellow-400 border border-yellow-500/50 bg-yellow-500/10 rounded-lg"
           >
             <span>Forgot My Password</span>
             <span>
@@ -91,15 +99,18 @@ const Profile = () => {
             </span>
           </Link>
           <Link
-            className="p-1 flex items-center justify-center gap-2 font-semibold w-full text-blue-400 border border-blue-500/50 bg-blue-500/10 rounded-lg cursor-pointer"
-            data-discover="true"
+            to={`/profile/${user?.id}/updateName`}
+            className="p-1 flex items-center justify-center gap-2 font-semibold w-full text-blue-400 border border-blue-500/50 bg-blue-500/10 rounded-lg"
           >
             <span>Change Name</span>
             <span>
               <LuPencil />
             </span>
           </Link>
-          <button className="p-1 flex items-center justify-center gap-2 font-semibold w-full text-green-400 border border-green-500/50 bg-green-500/10 rounded-lg cursor-pointer">
+          <button
+            onClick={logOut}
+            className="p-1 flex items-center justify-center gap-2 font-semibold w-full text-green-400 border border-green-500/50 bg-green-500/10 rounded-lg"
+          >
             <span>Logout</span>
             <span>
               <IoExitOutline />
