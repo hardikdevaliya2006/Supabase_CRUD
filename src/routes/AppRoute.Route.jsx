@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ProtectedRoute from "./ProtectedRoute.Route";
 import PublicRoutes from "./PublicRoutes.Route";
+import UserProfile from "../pages/UserProfile";
 
 const AppRoute = () => {
   return (
@@ -15,8 +16,7 @@ const AppRoute = () => {
         path="/login"
         element={
           <PublicRoutes>
-            {" "}
-            <Login />{" "}
+            <Login />
           </PublicRoutes>
         }
       />
@@ -50,6 +50,14 @@ const AppRoute = () => {
         element={
           <ProtectedRoute>
             <Update />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/:userId"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
           </ProtectedRoute>
         }
       />

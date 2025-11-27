@@ -1,9 +1,10 @@
 import { FaGithub } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
-
+  
   return (
     <nav className="h-full w-[97vw] md:w-[70vw] flex items-center justify-between">
       <div className="logoSection text-2xl font-bold text-white">
@@ -16,7 +17,10 @@ const Navbar = () => {
           <p>Github</p>
         </div>
         {!!user && isAuthenticated && (
-          <div className="profileCircle">
+          <Link
+            to={`/profile/${user?.user_metadata?.sub}`}
+            className="profileCircle"
+          >
             <img
               src={`https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${encodeURIComponent(
                 user.email
@@ -24,7 +28,7 @@ const Navbar = () => {
               alt="avatar"
               className="w-8 h-8"
             />
-          </div>
+          </Link>
         )}
       </div>
     </nav>
