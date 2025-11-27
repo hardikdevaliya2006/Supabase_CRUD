@@ -7,7 +7,7 @@ const UserProfile = () => {
       <header className="bg-slate-800 flex justify-center items-center h-[6vh]">
         <Navbar></Navbar>
       </header>
-      <section className="flex h-[88vh] flex-col gap-10 items-center justify-center">
+      <section className="flex h-[93vh] flex-col gap-6 items-center justify-center">
         <Profile></Profile>
       </section>
       <footer></footer>
