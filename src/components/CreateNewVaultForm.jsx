@@ -74,11 +74,25 @@ const CreateNewVaultForm = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("📦 FINAL FORM DATA:", form);
-    dispatch(createVault(form));
-    navigate("/");
+    const result = await dispatch(createVault(form));
+    if (createVault.fulfilled.match(result)) {
+      setForm({
+        title: "",
+        platform_url: "",
+        identifier: "",
+        password: "",
+        logo_url: "",
+        isEmailLogin: true,
+      })
+
+      setLoginType("email");
+      setShowPassword(false);
+      dispatch(clearBrand());
+      navigate("/");
+    }
   };
 
   return (
