@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MiniSpinner from "./MiniSpinner";
-import { loginUser } from "../store/reducer/actions/auth/loginUser.action";
 import { Link, useNavigate } from "react-router";
+import { loginUser } from "../store/feature/auth/actions/loginUser.action";
 
 const LoginForm = () => {
   const dispatch = useDispatch();

@@ -12,7 +12,7 @@ const Navbar = () => {
         <span>crud/&gt;</span>
       </div>
       <div className="navigationBtn flex items-center justify-center gap-2 text-white">
-        <div className="githubButton font-semibold text-sm border p-2 rounded-full bg-green-500/50 flex items-center gap-2">
+        <div className="githubButton font-semibold text-sm border border-white/50 p-2 rounded-full bg-green-500/50 flex items-center gap-2">
           <FaGithub className="text-xl"></FaGithub>
           <p>Github</p>
         </div>

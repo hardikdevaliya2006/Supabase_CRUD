@@ -1,8 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword } from "../store/reducer/actions/auth/forgotPassword.action";
 import Navbar from "../components/Navbar";
+import { forgotPassword } from "../store/feature/auth/actions/forgotPassword.action";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

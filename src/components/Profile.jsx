@@ -6,8 +6,8 @@ import { MdOutlineLock } from "react-icons/md";
 import { LuPencil } from "react-icons/lu";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Link, NavLink, useNavigate } from "react-router";
-import { logoutUser } from "../store/reducer/actions/auth/logoutUser.action";
+import { Link, useNavigate } from "react-router";
+import { logoutUser } from "../store/feature/auth/actions/logoutUser.action.js";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);

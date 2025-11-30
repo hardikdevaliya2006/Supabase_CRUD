@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import AppRoute from "./routes/AppRoute.Route";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
-import { checkAuth } from "./store/reducer/actions/auth/checkAuth.action";
+import { checkAuth } from "./store/feature/auth/actions/checkAuth.action";
 
 const App = () => {
   const dispatch = useDispatch()

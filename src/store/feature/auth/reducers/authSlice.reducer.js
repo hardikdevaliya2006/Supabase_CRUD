@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { checkAuth } from "./actions/auth/checkAuth.action"
-import { logoutUser } from "./actions/auth/logoutUser.action"
-import { loginUser } from "./actions/auth/loginUser.action"
-import { signupUser } from "./actions/auth/signupUser.action"
 import toast from "react-hot-toast"
-import { updateFullName } from "./actions/auth/updateFullName.action"
-import { forgotPassword } from "./actions/auth/forgotPassword.action"
+import { createSlice } from "@reduxjs/toolkit"
+import { checkAuth } from "../actions/checkAuth.action.js"
+import { logoutUser } from "../actions/logoutUser.action.js"
+import { loginUser } from "../actions/loginUser.action.js"
+import { signupUser } from "../actions/signupUser.action.js"
+import { updateFullName } from "../actions/updateFullName.action.js"
+import { forgotPassword } from "../actions/forgotPassword.action.js"
 
 const initialState = {
     user: null,

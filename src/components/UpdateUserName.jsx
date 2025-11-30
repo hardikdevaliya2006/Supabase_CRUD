@@ -2,7 +2,7 @@ import { useState } from "react";
 import MiniSpinner from "./MiniSpinner";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { updateFullName } from "../store/reducer/actions/auth/updateFullName.action";
+import { updateFullName } from "../store/feature/auth/actions/updateFullName.action";
 
 const UpdateUserName = () => {
   const { loading, user } = useSelector((state) => state.auth);
