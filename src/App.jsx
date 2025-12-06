@@ -5,19 +5,19 @@ import { useEffect } from "react";
 import { checkAuth } from "./store/feature/auth/actions/checkAuth.action";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth())
-  }, [dispatch])
-  
+    dispatch(checkAuth());
+  }, [dispatch]);
+
   return (
     <>
       <Toaster
         toastOptions={{
           success: {
             iconTheme: {
-              primary: "#22c55e",
+              primary: "#00c951",
               secondary: "#fff",
             },
           },

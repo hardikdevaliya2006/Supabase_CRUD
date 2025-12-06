@@ -7,7 +7,6 @@ export const loginUser = createAsyncThunk(
         try {
             const { data, error } = await suapabase.auth.signInWithPassword({ email, password })
             if (error) return rejectWithValue(error.message);
-            console.log("Login Data:", data)
             return data;
         } catch (error) {
             console.error(error)
