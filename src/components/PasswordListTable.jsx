@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVaults } from "../store/feature/crud/actions/fetchVaults.actions";
 import MiniSpinner from "./MiniSpinner";
-import { IoMdEye } from "react-icons/io";
 
 const PasswordListTable = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ const PasswordListTable = () => {
   }, []);
 
   return (
-    <section className="h-[86vh] md:w-[70vw] flex">
+    <section className="h-[87vh] md:w-[70vw] flex">
       {loading ? (
         <div className="flex items-center md:w-[70vw] justify-center gap-1">
           <div className="loading flex items-center justify-center">
@@ -27,7 +26,7 @@ const PasswordListTable = () => {
           <div className="text-black text-xl">Loading</div>
         </div>
       ) : vaults.length > 0 ? (
-        <section className="vaultsTable pt-2 h-[86vh] w-[95vw] flex flex-col">
+        <section className="vaultsTable pt-2 h-[87vh] w-[95vw] flex flex-col">
           <div className="tableHead bg-slate-800 rounded-t-xl">
             <ul className="grid grid-cols-[40px_40px_1fr_1fr] md:grid-cols-[40px_40px_1fr_1fr_1fr] xl:grid-cols-[40px_40px_1fr_1fr_1fr_1fr] text-white border-b border-gray-200 font-medium">
               <li className="flex items-center justify-center py-2">Sr.</li>
@@ -38,9 +37,9 @@ const PasswordListTable = () => {
               <li className="flex items-center justify-center py-2">Actions</li>
             </ul>
           </div>
-          <div className="tableData hide-scrollbar overflow-y-scroll h-[80vh] flex-col flex rounded-xl">
+          <div className="tableData hide-scrollbar overflow-y-scroll h-[81vh] flex-col flex rounded-xl">
             {vaults.map((vault, index) => (
-              <ul className={`${index+1 == vaults.length ? "rounded-b-xl" : ""} grid bg-green-200/50 grid-cols-[40px_40px_1fr_1fr] md:grid-cols-[40px_40px_1fr_1fr_1fr] xl:grid-cols-[40px_40px_1fr_1fr_1fr_1fr] text-slate-800`}>
+              <ul className={`${index+1 == vaults.length ? "rounded-xl" : ""} grid bg-green-200/50 grid-cols-[40px_40px_1fr_1fr] md:grid-cols-[40px_40px_1fr_1fr_1fr] xl:grid-cols-[40px_40px_1fr_1fr_1fr_1fr] text-slate-800`}>
                 <li className="flex items-center justify-center py-2">
                   {++index}
                 </li>
