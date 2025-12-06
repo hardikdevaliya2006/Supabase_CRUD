@@ -76,7 +76,6 @@ const CreateNewVaultForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("📦 FINAL FORM DATA:", form);
     const result = await dispatch(createVault(form));
     if (createVault.fulfilled.match(result)) {
       setForm({

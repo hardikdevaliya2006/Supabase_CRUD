@@ -6,10 +6,7 @@ export const fetchVaults = createAsyncThunk(
     async ({ rejectWithValue }) => {
         try {
             const { data, error } = await suapabase.from("vault_items").select("*")
-
             if (error) throw error;
-            console.log(data)
-            console.log(error)
             return data
         } catch (error) {
             return rejectWithValue(error.message || "Failed to fetch");
