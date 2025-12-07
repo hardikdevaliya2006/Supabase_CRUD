@@ -27,10 +27,10 @@ Try the live app: **https://supabasepasscrud.vercel.app**
 
 ## 🧭 Tech Stack
 
-- Frontend: Next.js (React) + Tailwind CSS
+- Frontend: React.js + Tailwind CSS + Axios + React Router
 - Backend: Supabase (Postgres, Auth, Realtime)
 - Deployment: Vercel
-- Optional: Zustand/Redux for state (if used), React Hook Form for forms
+- State Mangement: Redux for state
 
 ---
 
@@ -204,5 +204,4 @@ If you need help, please open an issue in this repository or reach out to the ma
 
 ---
 
-> Made with ❤️ — clean, simple, secure. If you want, I can tailor this README to include exact code snippets from your project (components, scripts, or environment values). Just say the word and paste the files or tell me which parts to include.
-
+> Made with ❤️ By Hardik Devaliya — clean, simple, secure. If you want, I can tailor this README to include exact code snippets from your project (components, scripts, or environment values). Just say the word and paste the files or tell me which parts to include.
