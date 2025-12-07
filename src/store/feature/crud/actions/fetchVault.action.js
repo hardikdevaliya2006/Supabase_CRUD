@@ -1,21 +1,32 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import suapabase from "../../../../supabase/supabase";
+import supabase from "../../../../supabase/supabase";
 
 export const fetchVault = createAsyncThunk(
     "crud/fetchVault",
     async (id, { rejectWithValue }) => {
         try {
-            const { data, error } = await suapabase
+            const { data, error, status } = await supabase
                 .from("vault_items")
                 .select("*")
                 .eq("id", id)
-                .single();
+                .maybeSingle(); 
+
+            if (!data) {
+                return rejectWithValue({
+                    message: "Vault not found",
+                    status: status
+                });
+            }
 
             if (error) throw error;
-            console.log(data)
+
             return data;
-        } catch (error) {
-            return rejectWithValue(error || "Failed to fetch Vaults");
+
+        } catch (err) {
+            return rejectWithValue({
+                message: err.message || "Failed to fetch vault",
+                status: err.status || 500
+            });
         }
     }
-)
+);

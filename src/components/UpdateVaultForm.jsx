@@ -11,6 +11,7 @@ import { LuEyeClosed } from "react-icons/lu";
 import { useNavigate, useParams } from "react-router";
 import { fetchVault } from "../store/feature/crud/actions/fetchVault.action";
 import { updateVault } from "../store/feature/crud/actions/updateVault.action";
+import toast from "react-hot-toast";
 
 const UpdateVaultForm = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const UpdateVaultForm = () => {
   } = useSelector((state) => state.brand);
 
   const {
-    vaults,
+    vault,
     loading: vaultLoading,
     error,
   } = useSelector((state) => state.crud);
@@ -78,28 +79,39 @@ const UpdateVaultForm = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
-    if (vaults) {
+    if (!error) return;
+
+    const msg = typeof error === "string" ? error : error.message;
+    toast.error(msg);
+
+    if (error.status === 406 || msg.includes("not found")) {
+      setTimeout(() => navigate("/"), 900);
+    }
+  }, [error, navigate]);
+
+  useEffect(() => {
+    if (vault) {
       setForm({
-        title: vaults.title || "",
-        platform_url: vaults.platform_url || "",
-        identifier: vaults.identifier || "",
-        password: vaults.password || "",
-        logo_url: vaults.logo_url || "",
-        isEmailLogin: vaults.isEmailLogin ?? true,
+        title: vault.title || "",
+        platform_url: vault.platform_url || "",
+        identifier: vault.identifier || "",
+        password: vault.password || "",
+        logo_url: vault.logo_url || "",
+        isEmailLogin: vault.isEmailLogin ?? true,
       });
 
-      setLoginType(vaults.isEmailLogin ? "email" : "username");
-      if (vaults.logo_url) {
+      setLoginType(vault.isEmailLogin ? "email" : "username");
+      if (vault.logo_url) {
         dispatch(
           selectBrand({
-            name: vaults.title,
-            domain: vaults.platform_url,
-            icon: vaults.logo_url,
+            name: vault.title,
+            domain: vault.platform_url,
+            icon: vault.logo_url,
           })
         );
       }
     }
-  }, [vaults, dispatch]);
+  }, [vault, dispatch]);
 
   useEffect(() => {
     const handler = (e) => {

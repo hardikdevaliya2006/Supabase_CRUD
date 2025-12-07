@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchVaults } from "../store/feature/crud/actions/fetchVaults.actions";
 import MiniSpinner from "./MiniSpinner";
 import { useNavigate } from "react-router";
+import { deleteVaults } from "../store/feature/crud/actions/deleteVault.action";
 
 const PasswordListTable = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,17 @@ const PasswordListTable = () => {
     }, 1000);
   };
 
+  const handleDeleteVault = (id) => {
+    dispatch(deleteVaults(id));
+  };
+
   useEffect(() => {
     const getTableData = async () => {
       const userId = session?.user?.id;
       dispatch(fetchVaults(userId));
     };
     getTableData();
-  }, []);
+  }, [dispatch, session?.user?.id]);
 
   return (
     <section className="h-[87vh] md:w-[70vw] flex">
@@ -53,7 +58,7 @@ const PasswordListTable = () => {
             {vaults.map((vault, index) => (
               <ul
                 className={`${
-                  index + 1 == vaults.length ? "rounded-xl" : ""
+                  index + 1 == vaults.length ? "rounded-b-xl" : ""
                 } grid bg-green-200/50 grid-cols-[40px_40px_1fr_1fr] md:grid-cols-[40px_40px_1fr_1fr_1fr] xl:grid-cols-[40px_40px_1fr_1fr_1fr_1fr] text-slate-800`}
               >
                 <li className="flex items-center justify-center py-2">
@@ -96,14 +101,14 @@ const PasswordListTable = () => {
                       style={{ width: "25px", height: "25px" }}
                     ></lord-icon>
                   </button>
-                  <div>
+                  <button onClick={() => handleDeleteVault(vault?.id)}>
                     <lord-icon
                       src="https://cdn.lordicon.com/xyfswyxf.json"
                       trigger="hover"
                       colors="primary:#1d293d"
                       style={{ width: "23px", height: "23px" }}
                     ></lord-icon>
-                  </div>
+                  </button>
                 </li>
               </ul>
             ))}

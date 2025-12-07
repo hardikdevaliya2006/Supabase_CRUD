@@ -1,84 +1,86 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createVault } from "../actions/createVault.action";
 import toast from "react-hot-toast";
+
+import { createVault } from "../actions/createVault.action";
 import { fetchVaults } from "../actions/fetchVaults.actions";
 import { fetchVault } from "../actions/fetchVault.action";
 import { updateVault } from "../actions/updateVault.action";
+import { deleteVaults } from "../actions/deleteVault.action";
 
 const initialState = {
     vaults: [],
+    vault: null,
     loading: false,
-    error: null
-}
+    error: null,
+};
+
+// Reusable toast helper (avoids repeating logic)
+const handleToast = (type, message) => {
+    if (!message) return;
+    type === "success" ? toast.success(message) : toast.error(message);
+};
 
 const crudSlice = createSlice({
-    name: "crud",
+    name: "vault",
     initialState,
+
     extraReducers: (builder) => {
+        const setPending = (state) => {
+            state.loading = true;
+            state.error = null;
+        };
+
+        const setRejected = (state, action, showToast = true) => {
+            state.loading = false;
+            state.error = action.payload;
+            if (showToast) handleToast("error", action.payload);
+        };
+
         builder
-        
 
-        //Update Vaults
-            .addCase(updateVault.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(updateVault.fulfilled, (state, action) => {
+            // Create Vault
+            .addCase(createVault.pending, setPending)
+            .addCase(createVault.fulfilled, (state, action) => {
                 state.loading = false;
-                state.vaults = action.payload;
-                toast.success("Vault Updated");
+                state.vaults.push(action.payload);
+                handleToast("success", "Vault created successfully");
             })
-            .addCase(updateVault.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                toast.error(action.payload);
-            })    
-        //Fetch Vaults
-            .addCase(fetchVault.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(fetchVault.fulfilled, (state, action) => {
-                state.loading = false;
-                state.vaults = action.payload;
-            })
-            .addCase(fetchVault.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                toast.error(action.payload);
-            })
+            .addCase(createVault.rejected, setRejected)
 
-            //Fetch Vaults
-            .addCase(fetchVaults.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
+            // Fetch All Vaults
+            .addCase(fetchVaults.pending, setPending)
             .addCase(fetchVaults.fulfilled, (state, action) => {
                 state.loading = false;
                 state.vaults = action.payload;
             })
-            .addCase(fetchVaults.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                toast.error(action.payload);
-            })
+            .addCase(fetchVaults.rejected, setRejected)
 
-            // Create vault
-            .addCase(createVault.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(createVault.fulfilled, (state, action) => {
+            // Fetch Single Vault
+            .addCase(fetchVault.pending, setPending)
+            .addCase(fetchVault.fulfilled, (state, action) => {
                 state.loading = false;
-                state.vaults.push(action.payload);
-                toast.success("Saved")
+                state.vault = action.payload;
             })
-            .addCase(createVault.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                toast.error(action.payload)
-            });
-    }
-})
+            .addCase(fetchVault.rejected, setRejected)
 
-export default crudSlice.reducer
+            // Update Vault
+            .addCase(updateVault.pending, setPending)
+            .addCase(updateVault.fulfilled, (state, action) => {
+                state.loading = false;
+                state.vaults = action.payload;
+                handleToast("success", "Vault updated successfully");
+            })
+            .addCase(updateVault.rejected, setRejected)
+
+            //Delete Vault
+            .addCase(deleteVaults.pending, setPending)
+            .addCase(deleteVaults.fulfilled, (state, action) => {
+                state.loading = false;
+                state.vaults = state.vaults.filter((v) => v.id !== action.payload);
+                toast.success("Vault Deleted");
+            })
+            .addCase(deleteVaults.rejected, setRejected)
+    },
+});
+
+export default crudSlice.reducer;
