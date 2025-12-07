@@ -134,7 +134,7 @@ const PasswordListTable = () => {
           </div>
         </section>
       ) : (
-        <div className="notFound gap-4 flex flex-col items-center justify-center">
+        <div className="notFound gap-4 md:w-[70vw] flex flex-col items-center justify-center">
           <img src="/empty-table.png" alt="empty-table" className="h-56" />
           <p className="flex flex-col gap-2 items-center justify-center">
             <span className="font-semibold">No Valut Found</span>
