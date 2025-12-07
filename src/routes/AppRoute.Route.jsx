@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import Dashboard from "../pages/Dashboard";
-import Update from "../pages/Dashboard";
+import Update from "../pages/Update";
 import Create from "../pages/Create";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";

@@ -10,7 +10,6 @@ const Create = () => {
       <section className="h-[92vh] mt-4">
         <CreateNewVaultForm></CreateNewVaultForm>
       </section>
-      <footer></footer>
     </main>
   );
 };

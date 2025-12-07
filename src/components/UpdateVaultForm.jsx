@@ -8,17 +8,27 @@ import {
 import MiniSpinner from "./MiniSpinner";
 import { IoEyeOutline } from "react-icons/io5";
 import { LuEyeClosed } from "react-icons/lu";
-import { createVault } from "../store/feature/crud/actions/createVault.action";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { fetchVault } from "../store/feature/crud/actions/fetchVault.action";
+import { updateVault } from "../store/feature/crud/actions/updateVault.action";
 
-const CreateNewVaultForm = () => {
+const UpdateVaultForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); 
-  const { suggestions, selectedBrand, loading } = useSelector(
-    (state) => state.brand
-  );
-
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const dropdownRef = useRef(null);
+
+  const {
+    suggestions,
+    selectedBrand,
+    loading: brandLoading,
+  } = useSelector((state) => state.brand);
+
+  const {
+    vaults,
+    loading: vaultLoading,
+    error,
+  } = useSelector((state) => state.crud);
 
   const [isOpen, setIsOpen] = useState(false);
   const [loginType, setLoginType] = useState("email");
@@ -58,47 +68,69 @@ const CreateNewVaultForm = () => {
       title: brand?.name,
       platform_url: brand?.domain,
       logo_url: brand?.icon,
-      isEmailLogin: loginType === "email",
     }));
 
     setIsOpen(false);
   };
 
   useEffect(() => {
+    dispatch(fetchVault(id));
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (vaults) {
+      setForm({
+        title: vaults.title || "",
+        platform_url: vaults.platform_url || "",
+        identifier: vaults.identifier || "",
+        password: vaults.password || "",
+        logo_url: vaults.logo_url || "",
+        isEmailLogin: vaults.isEmailLogin ?? true,
+      });
+
+      setLoginType(vaults.isEmailLogin ? "email" : "username");
+      if (vaults.logo_url) {
+        dispatch(
+          selectBrand({
+            name: vaults.title,
+            domain: vaults.platform_url,
+            icon: vaults.logo_url,
+          })
+        );
+      }
+    }
+  }, [vaults, dispatch]);
+
+  useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target))
         setIsOpen(false);
     };
-
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(createVault(form));
-    if (createVault.fulfilled.match(result)) {
-      setForm({
-        title: "",
-        platform_url: "",
-        identifier: "",
-        password: "",
-        logo_url: "",
-        isEmailLogin: true,
-      })
-
-      setLoginType("email");
-      setShowPassword(false);
-      dispatch(clearBrand());
+    const result = await dispatch(updateVault({ id, data: form }));
+    if (updateVault.fulfilled.match(result) && error === null) {
       navigate("/");
     }
   };
+
+  if (vaultLoading) {
+    return (
+      <div className="w-full text-center py-8 text-white text-lg">
+        Loading vault data...
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full w-[90vw] md:w-[600px] mx-auto items-start justify-center">
       <div className="formHeader border-t-transparent rounded-t-md md:rounded-t-xl px-2 lg:px-4 lg:py-2 py-1 bg-slate-800 w-full">
         <p className="text-xl lg:text-2xl font-semibold text-white">
-          <span className="text-green-500">Create </span> New Vault
+          <span className="text-green-500">Update </span> Vault
         </p>
       </div>
 
@@ -130,7 +162,7 @@ const CreateNewVaultForm = () => {
               suggestions.length > 0 &&
               !selectedBrand && (
                 <ul className="absolute w-full top-16 left-0 bg-slate-800 shadow-lg border rounded-md max-h-48 overflow-auto z-20">
-                  {loading ? (
+                  {brandLoading ? (
                     <li className="flex items-center justify-center h-8">
                       <MiniSpinner variant="muted" />
                     </li>
@@ -227,15 +259,16 @@ const CreateNewVaultForm = () => {
             </button>
           </div>
 
-          <div className="submitButton flex items-center">
+          <div className="updateButton flex items-center">
             <button className="bg-green-500 flex items-center justify-center gap-2 px-5 py-1 rounded-full text-black font-semibold">
               <lord-icon
-                src="https://cdn.lordicon.com/efxgwrkc.json"
+                src="https://cdn.lordicon.com/ibckyoan.json"
                 trigger="hover"
+                delay="1500"
                 colors="primary:#000000"
                 className="w-5"
               ></lord-icon>
-              <p>Save</p>
+              <p>Update</p>
             </button>
           </div>
         </form>
@@ -244,4 +277,4 @@ const CreateNewVaultForm = () => {
   );
 };
 
-export default CreateNewVaultForm;
+export default UpdateVaultForm;

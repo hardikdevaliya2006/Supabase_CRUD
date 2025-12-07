@@ -6,7 +6,6 @@ export const searchBrands = createAsyncThunk(
     async (query, { rejectWithValue }) => {
         try {
             const response = await brandApi.get(`/search/${query}`)
-            console.log(response)
             return response.data || []
         } catch (error) {
             return rejectWithValue(

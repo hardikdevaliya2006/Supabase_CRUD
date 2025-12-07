@@ -1,11 +1,15 @@
-import React from "react";
+import Navbar from "../components/Navbar";
+import UpdateVaultForm from "../components/UpdateVaultForm";
 
 const Update = () => {
   return (
-    <main className="h-full w-full bg-green-50 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] ">
-      <header></header>
-      <div></div>
-      <footer></footer>
+    <main className="h-screen bg-green-50 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] ">
+      <header className="bg-slate-800 flex justify-center items-center h-[6vh]">
+        <Navbar></Navbar>
+      </header>
+      <section className="h-[92vh] mt-4">
+        <UpdateVaultForm></UpdateVaultForm>
+      </section>
     </main>
   );
 };
