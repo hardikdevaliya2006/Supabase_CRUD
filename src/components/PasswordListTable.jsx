@@ -4,6 +4,7 @@ import { fetchVaults } from "../store/feature/crud/actions/fetchVaults.actions";
 import MiniSpinner from "./MiniSpinner";
 import { useNavigate } from "react-router";
 import { deleteVaults } from "../store/feature/crud/actions/deleteVault.action";
+import toast from "react-hot-toast";
 
 const PasswordListTable = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,24 @@ const PasswordListTable = () => {
 
   const handleDeleteVault = (id) => {
     dispatch(deleteVaults(id));
+  };
+
+  const handleCopyPassword = (id) => {
+    const selectedVault = vaults.find((vault) => vault.id === id);
+
+    if (!selectedVault?.password) {
+      toast.error("No password found");
+      return;
+    }
+
+    navigator.clipboard
+      .writeText(selectedVault.password)
+      .then(() => {
+        toast.success("Password copied to clipboard");
+      })
+      .catch(() => {
+        toast.error("Failed to copy password");
+      });
   };
 
   useEffect(() => {
@@ -76,7 +95,7 @@ const PasswordListTable = () => {
                 </li>
                 <li className="md:flex hidden items-center justify-center py-2">
                   <span>******</span>
-                  <span>
+                  <button onClick={() => handleCopyPassword(vault?.id)}>
                     <lord-icon
                       style={{
                         width: "25px",
@@ -87,7 +106,7 @@ const PasswordListTable = () => {
                       src="https://cdn.lordicon.com/iykgtsbt.json"
                       trigger="hover"
                     ></lord-icon>
-                  </span>
+                  </button>
                 </li>
                 <li className="xl:flex hidden items-center justify-center py-2">
                   <span>{vault?.platform_url}</span>
